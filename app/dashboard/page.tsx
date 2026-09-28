@@ -1,36 +1,38 @@
+import { redirect } from "next/dist/server/api-utils";
+
+import ProductCard from "@/_components/ProductCard";
 import api from "@/lib/axios";
+import { TProduct } from "@/types";
 
 const Page = async () => {
-  const { data } = await api.get("/api/v1/products");
+  const { data, status } = await api.get("api/v1/products");
+  console.log(data);
 
-  const products = data.map((p: any, index: number) => {
+  if (status !== 200) {
+    return <p className="text-red-500">Oops there was an error</p>;
+  }
+
+  const Products = data.map((p: TProduct, index: number) => {
     return (
-      <div
-        key={index}
-        className="flex flex-col gap-2 p-8 sm:flex-row sm:items-center sm:gap-6 sm:py-4 ..."
-      >
-        <img
-          className="mx-auto block h-24 rounded-full sm:mx-0 sm:shrink-0"
-          src="/img/erin-lindford.jpg"
-          alt=""
-        />
-
-        <div className="space-y-2 text-center sm:text-left">
-          <div className="space-y-0.5">
-            <p className="text-lg font-semibold text-black">Erin Lindford</p>
-
-            <p className="font-medium text-gray-500">Product Engineer</p>
-          </div>
-
-          <button className="border border-purple-200 text-purple-600 hover:border-transparent hover:bg-purple-600 hover:text-white active:bg-purple-700 ...">
-            Message
-          </button>
-        </div>
+      <div key={index} className="w-sm">
+        {
+          <ProductCard
+            name={p.name}
+            price={p.price}
+            imageUrl={`/assets/products/${p.name}.png`}
+            link={`/dashboard/products/${p.id}`}
+          />
+        }
       </div>
     );
   });
 
-  return products;
+  return (
+    <div className="space-y-5 md:space-y-8">
+      <h2 className="text-lg md:text-xl">Explore Products</h2>
+      <div className="flex flex-wrap gap-4 md:gap-6">{Products}</div>
+    </div>
+  );
 };
 
 export default Page;

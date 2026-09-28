@@ -1,4 +1,6 @@
-const DashLayout = ({ children }: { children: React.ReactNode }) => {
-  return <div className="text-purple-400 p-10">{children}</div>;
+import DashLayout from "./_components/DashLayout";
+
+const DashRootLayout = ({ children }: { children: React.ReactNode }) => {
+  return <DashLayout>{children}</DashLayout>;
 };
-export default DashLayout;
+export default DashRootLayout;
