@@ -7,7 +7,7 @@ import { TProduct } from "@/types";
 export const dynamic = "force-dynamic";
 
 const Page = async () => {
-  const { data, status } = await api.get("api/v1/products");
+  const { data, status } = await api.get("/api/v1/products");
   console.log(data);
 
   if (status !== 200) {
