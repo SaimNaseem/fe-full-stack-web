@@ -4,6 +4,8 @@ import ProductCard from "@/_components/ProductCard";
 import api from "@/lib/axios";
 import { TProduct } from "@/types";
 
+export const dynamic = "force-dynamic";
+
 const Page = async () => {
   const { data, status } = await api.get("api/v1/products");
   console.log(data);
